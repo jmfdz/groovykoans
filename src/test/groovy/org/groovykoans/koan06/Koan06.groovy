@@ -96,8 +96,8 @@ class Koan06 extends GroovyTestCase {
         def primesBetween200And250 = []
         // ------------ START EDITING HERE ----------------------
 		primesBetween200And250 = (200..250).findAll { numero ->
-			(2..<numero).every{divisor ->
-				numero % divisor != 0
+			(2..Math.sqrt(x)).every{
+				numero % it != 0
 			}
 		}
 		
