@@ -80,15 +80,11 @@ class Koan10 extends GroovyTestCase {
         List<String> sortedList = []
         // ------------ START EDITING HERE ----------------------
 		def xml = new XmlSlurper().parse(new File("src/test/groovy/org/groovykoans/koan10/movies.xml"))
-		def listaDeNodos = xml.movie.list().sort { a, b ->
-        	def anoa = a.year.text().toInteger()
-			def anob = b.year.text().toInteger()
-			if(anoa == anob)
-				return a.title.text() <=> b.title.text()
-			else
-				return anoa <=> anob			
-		}
-		sortedList = listaDeNodos.collect{ it.title.text() }
+		def tmp = xml.movie.list().sort{
+	            a,b -> (a.year.toInteger() <=> b.year.toInteger()) ?: (a.title.text() <=> b.title.text())
+	        }
+
+	 	sortedList = tmp.collect{it.title}
         // ------------ STOP EDITING HERE  ----------------------
         assert sortedList == ['Conan the Barbarian', 'The Terminator', 'Predator',
                 'Kindergarten Cop', 'Total Recall', 'True Lies', 'The Expendables']
